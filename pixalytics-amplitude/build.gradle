@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+repositories {
+    maven {
+        // Until pixalytics-core is deployed to JCenter
+        url "http://dl.bintray.com/pixable/maven"
+    }
+}
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    api 'com.pixable:pixalytics-core:0.7.1'
+    api 'com.amplitude:android-sdk:2.13.4'
+}
