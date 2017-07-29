@@ -2,7 +2,6 @@ package com.thumbtack.pixalytics.amplitude.proxy;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.Identify;
@@ -44,7 +43,7 @@ public class AmplitudeProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperty(String name, @NonNull Object value) {
+    public void addCommonProperty(String name, Object value) {
         mCommonProperties.put(name, value);
     }
 
@@ -64,7 +63,7 @@ public class AmplitudeProxy implements PlatformProxy {
     }
 
     @Override
-    public void addUserProperty(@NonNull String name, @NonNull Object value) {
+    public void addUserProperty(String name, Object value) {
         Amplitude.getInstance().identify(new Identify().set(name, value));
     }
 
