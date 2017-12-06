@@ -2,6 +2,7 @@ package com.thumbtack.pixalytics.amplitude.proxy;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.Identify;
@@ -16,44 +17,47 @@ import java.util.Map;
 
 public class AmplitudeProxy implements PlatformProxy {
 
+    @NonNull
     private final Application mApplication;
 
+    @NonNull
     private final String mApiKey;
 
+    @NonNull
     private final Map<String, Object> mCommonProperties = new HashMap<>();
 
-    public AmplitudeProxy(Application application, String apiKey) {
+    public AmplitudeProxy(@NonNull final Application application, @NonNull final String apiKey) {
         mApplication = application;
         mApiKey = apiKey;
     }
 
     @Override
-    public void onApplicationCreate(Context context) {
+    public void onApplicationCreate(@NonNull final Context context) {
         Amplitude.getInstance().initialize(context, mApiKey).enableForegroundTracking(mApplication);
     }
 
     @Override
-    public void onSessionStart(Context context) {
+    public void onSessionStart(@NonNull final Context context) {
         // Happens automatically
     }
 
     @Override
-    public void onSessionFinish(Context context) {
+    public void onSessionFinish(@NonNull final Context context) {
         // Happens automatically
     }
 
     @Override
-    public void addCommonProperty(String name, Object value) {
+    public void addCommonProperty(@NonNull final String name, @NonNull final Object value) {
         mCommonProperties.put(name, value);
     }
 
     @Override
-    public void addCommonProperties(Map<String, Object> commonProperties) {
+    public void addCommonProperties(@NonNull final Map<String, Object> commonProperties) {
         mCommonProperties.putAll(commonProperties);
     }
 
     @Override
-    public void clearCommonProperty(String name) {
+    public void clearCommonProperty(@NonNull final String name) {
         mCommonProperties.remove(name);
     }
 
@@ -63,12 +67,12 @@ public class AmplitudeProxy implements PlatformProxy {
     }
 
     @Override
-    public void addUserProperty(String name, Object value) {
+    public void addUserProperty(@NonNull final String name, @NonNull final Object value) {
         Amplitude.getInstance().identify(new Identify().set(name, value));
     }
 
     @Override
-    public void trackEvent(Event event) {
+    public void trackEvent(@NonNull final Event event) {
         final Map<String, Object> allProperties = event.getProperties();
         allProperties.putAll(mCommonProperties);
 
@@ -76,17 +80,21 @@ public class AmplitudeProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackScreen(Screen screen) {
+    public void trackScreen(@NonNull final Screen screen) {
         // Not relevant for Amplitude
     }
 
     @Override
-    public void trackSocial(String network, String action, String target) {
+    public void trackSocial(
+            @NonNull final String network,
+            @NonNull final String action,
+            @NonNull final String target
+    ) {
         // Not relevant for Amplitude
     }
 
     @Override
-    public void trackRevenue(String product, double revenue) {
+    public void trackRevenue(@NonNull final String product, final double revenue) {
         Amplitude.getInstance().logRevenue(product, 1, revenue);
     }
 
@@ -101,7 +109,7 @@ public class AmplitudeProxy implements PlatformProxy {
     }
 
     @Override
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(@NonNull final String identifier) {
         Amplitude.getInstance().setUserId(identifier);
     }
 }
