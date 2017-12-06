@@ -12,8 +12,8 @@ import com.pixable.pixalytics.core.proxy.PlatformProxy;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AmplitudeProxy implements PlatformProxy {
 
@@ -24,7 +24,7 @@ public class AmplitudeProxy implements PlatformProxy {
     private final String mApiKey;
 
     @NonNull
-    private final Map<String, Object> mCommonProperties = new HashMap<>();
+    private final Map<String, Object> mCommonProperties = new ConcurrentHashMap<>();
 
     public AmplitudeProxy(@NonNull final Application application, @NonNull final String apiKey) {
         mApplication = application;
